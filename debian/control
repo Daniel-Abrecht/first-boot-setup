@@ -1,0 +1,14 @@
+Source: first-boot-setup
+Section: misc
+Priority: optional
+Maintainer: Daniel Abrecht <deb@danielabrecht.ch>
+Build-Depends: debhelper (>= 9)
+Standards-Version: 3.9.8
+#Homepage: <insert the upstream URL, if relevant>
+#Vcs-Git: https://anonscm.debian.org/collab-maint/first-boot-setup.git
+#Vcs-Browser: https://anonscm.debian.org/cgit/collab-maint/first-boot-setup.git
+
+Package: first-boot-setup
+Architecture: all
+Depends: ${misc:Depends}, initramfs-tools, dialog, util-linux, e2fsprogs
+Description: Do some initial setup stuff, such as growing the rootfs, asking questions, and installing additional questions

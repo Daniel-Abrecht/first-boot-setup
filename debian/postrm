@@ -1,0 +1,5 @@
+#!/bin/sh
+
+test "$1" = 'configure' || exit 0
+
+update-initramfs -u
