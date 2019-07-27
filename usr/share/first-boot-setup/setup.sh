@@ -42,6 +42,13 @@ dpkg-reconfigure locales
 
 setpw root
 
+while [ -z "$devname" ] || printf "%s\n" "$devname" | grep -q '[^a-zA-Z0-9-]'
+do
+  devname="$(dialog --no-cancel --inputbox "Please choose a name for your device\n(Only alphanumeric characters and - are possible)" 0 0 3>&1 1>&2 --output-fd 3)"
+  printf "%s\n" "$devname" >/etc/hostname
+  hostname "$devname"
+done
+
 # Update package list
 apt-get update
 
