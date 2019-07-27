@@ -1,5 +1,5 @@
-first-boot-setup (0.0.0-1) unstable; urgency=medium
+first-boot-setup (0.0.0) unstable; urgency=medium
 
-  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+  * Initial release
 
  -- Daniel Abrecht <daniel@mamut.danielabrecht.ch>  Sat, 20 Jul 2019 23:30:20 +0200
