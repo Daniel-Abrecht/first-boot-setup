@@ -26,30 +26,14 @@ cleanup(){
 }
 trap cleanup EXIT
 
-setpw(){
-  local pw=
-  local confirm_pw=
-  while [ -z "$pw" ] || [ "$pw" != "$confirm_pw" ]
-  do
-    pw="$(dialog --no-cancel --insecure --passwordbox "Please set the password for $1" 0 0 3>&1 1>&2 --output-fd 3)" || true
-    [ -n "$pw" ] || continue
-    confirm_pw="$(dialog --no-cancel --insecure --passwordbox "Please confirm the password" 0 0 3>&1 1>&2 --output-fd 3)" || true
-  done
-  printf '%s' "$1:$pw" | chpasswd
-}
-
-dpkg-reconfigure locales
-
-setpw root
-
-while [ -z "$devname" ] || printf "%s\n" "$devname" | grep -q '[^a-zA-Z0-9-]'
-do
-  devname="$(dialog --no-cancel --inputbox "Please choose a name for your device\n(Only alphanumeric characters and - are possible)" 0 0 3>&1 1>&2 --output-fd 3)"
-  printf "%s\n" "$devname" >/etc/hostname
-  hostname "$devname"
-done
-
 # Update package list
+(
+  cd temp-repo/
+  rm -f Packages*
+  dpkg-scanpackages -m . > Packages
+  gzip -k Packages
+  xz -k Packages
+)
 apt-get update
 
 # Remove dummy packages
