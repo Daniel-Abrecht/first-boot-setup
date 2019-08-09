@@ -8,8 +8,6 @@ copy_exec /sbin/sfdisk
 copy_exec /sbin/resize2fs
 copy_exec /sbin/mkfs.f2fs
 copy_exec /sbin/resize.f2fs
-copy_exec /bin/mkfs.btrfs
-copy_exec /bin/btrfs
 copy_exec /bin/grep
 copy_exec /bin/sed
 copy_exec /bin/tar
