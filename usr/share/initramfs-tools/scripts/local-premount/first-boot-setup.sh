@@ -13,7 +13,7 @@ part2dev(){
 
 if ! rootdisk="$(part2dev "$ROOT")" || ! partnumber="$(printf '%s\n' "$ROOT" | grep -o '[0-9]*$')"
 then
-  log_failure_msg "first-boot-setup: Not sure how to handle root=\"$root\""
+  log_failure_msg "first-boot-setup: Not sure how to handle root=\"$ROOT\""
   exit 0
 fi
 
