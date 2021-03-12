@@ -6,6 +6,29 @@ export APT_CONFIG="$SETUP_DIR"/apt.conf
 
 cd "$SETUP_DIR" || exit 1
 
+setpw(){
+  local pw=
+  local confirm_pw=
+  while [ -z "$pw" ] || [ "$pw" != "$confirm_pw" ]
+  do
+    pw="$(dialog --no-cancel --insecure --passwordbox "Please set the password for $1" 0 0 3>&1 1>&2 --output-fd 3)" || true
+    [ -n "$pw" ] || continue
+    confirm_pw="$(dialog --no-cancel --insecure --passwordbox "Please confirm the password" 0 0 3>&1 1>&2 --output-fd 3)" || true
+  done
+  printf '%s' "$1:$pw" | chpasswd
+}
+
+dpkg-reconfigure locales
+
+setpw root
+
+while [ -z "$devname" ] || printf "%s\n" "$devname" | grep -q '[^a-zA-Z0-9-]'
+do
+  devname="$(dialog --no-cancel --inputbox "Please choose a name for your device\n(Only alphanumeric characters and - are possible)" 0 0 3>&1 1>&2 --output-fd 3)"
+  printf "%s\n" "$devname" >/etc/hostname
+  hostname "$devname"
+done
+
 cat >/usr/sbin/policy-rc.d <<EOF
 #!/bin/sh
 exit 101
@@ -35,12 +58,6 @@ trap cleanup EXIT
   xz -k Packages
 )
 apt-get update
-
-# Remove dummy packages
-for dummy in $(cat dummy_packages_to_replace)
-do if [ "$(dpkg-query -W --showformat='${Status}\n' "$dummy" 2>&-)" = 'install ok installed' ]
-  then apt-get -y install "$dummy" || true
-fi; done
 
 for script in pre_target_install/*
 do
