@@ -10,5 +10,5 @@ Standards-Version: 3.9.8
 
 Package: first-boot-setup
 Architecture: all
-Depends: ${misc:Depends}, initramfs-tools, dialog, util-linux, e2fsprogs, f2fs-tools, tar, gzip
+Depends: ${misc:Depends}, initramfs-tools, dialog, util-linux, e2fsprogs, f2fs-tools, tar, gzip, fdisk
 Description: Do some initial setup stuff, such as growing the rootfs, asking questions, and installing additional questions
