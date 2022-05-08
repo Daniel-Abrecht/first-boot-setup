@@ -3,6 +3,11 @@
 [ "$1" = prereqs ] && exit 0 || true
 . /scripts/functions
 
+# This may be a symlink in /dev/disk, let's resolve it, because to resize the partition, we need to figure out the device
+if [ -h "$ROOT" ]
+  then ROOT="$(readlink -f "$ROOT")"
+fi
+
 part2dev(){
   [ -b "$1" ] || return 1
   res="$(printf '%s\n' /sys/block/*/"$(printf '%s' "$1" | grep -o "[^/]*$")" | sed -n 's|.*/\([^/]\+\)/[^/]\+$|\1|p')"
