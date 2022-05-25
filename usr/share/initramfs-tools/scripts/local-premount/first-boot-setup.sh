@@ -3,6 +3,12 @@
 [ "$1" = prereqs ] && exit 0 || true
 . /scripts/functions
 
+# Make sure we have the device file
+case "$ROOT" in
+  PARTUUID=*) ROOT="/dev/disk/by-partuuid/${ROOT#PARTUUID=}" ;;
+  UUID=*) ROOT="/dev/disk/by-uuid/${ROOT#UUID=}" ;;
+esac
+
 # This may be a symlink in /dev/disk, let's resolve it, because to resize the partition, we need to figure out the device
 if [ -h "$ROOT" ]
   then ROOT="$(readlink -f "$ROOT")"
