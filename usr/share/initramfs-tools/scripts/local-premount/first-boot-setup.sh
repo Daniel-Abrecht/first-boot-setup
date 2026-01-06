@@ -39,8 +39,14 @@ FSTYPE="$(get_fstype "$ROOT")"
 
 echo ', +' | sfdisk -N "$partnumber" "/dev/$rootdisk"
 case "$FSTYPE" in
-  ext?) resize2fs "$ROOT" ;;
-  f2fs) resize.f2fs "$ROOT" ;;
+  ext?)
+    fsck.ext4 -f "$ROOT" || true
+    resize2fs "$ROOT"
+    ;;
+  f2fs)
+    fsck.f2fs -f "$ROOT" || true
+    resize.f2fs "$ROOT"
+    ;;
 esac
 
 set -e
