@@ -41,7 +41,7 @@ echo ', +' | sfdisk -N "$partnumber" "/dev/$rootdisk"
 case "$FSTYPE" in
   ext?)
     fsck.ext4 -f "$ROOT" || true
-    resize2fs "$ROOT"
+    resize2fs -f "$ROOT"
     ;;
   f2fs)
     fsck.f2fs -f "$ROOT" || true
