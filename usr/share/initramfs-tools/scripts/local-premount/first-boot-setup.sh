@@ -40,7 +40,7 @@ FSTYPE="$(get_fstype "$ROOT")"
 echo ', +' | sfdisk -N "$partnumber" "/dev/$rootdisk"
 case "$FSTYPE" in
   ext?)
-    fsck.ext4 -f "$ROOT" || true
+    fsck.ext4 -f -y "$ROOT" || true
     resize2fs -f "$ROOT"
     ;;
   f2fs)

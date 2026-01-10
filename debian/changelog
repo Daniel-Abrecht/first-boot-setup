@@ -1,3 +1,10 @@
+first-boot-setup (0.0.1) unstable; urgency=medium
+
+  * Initial release
+  * Fsck filesystem before resizing and force resizing
+
+ -- Daniel Abrecht <daniel@mamut.danielabrecht.ch>  Sat, 10 Jan 2025 23:30:20 +0200
+
 first-boot-setup (0.0.0) unstable; urgency=medium
 
   * Initial release
